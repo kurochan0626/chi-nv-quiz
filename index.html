@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>痴女三十问</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  background:#ffeaf3;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+}
+
+.card{
+  background:white;
+  padding:22px;
+  border-radius:16px;
+  width:90%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+button{
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#ff6fae;
+  color:white;
+}
+
+button:hover{
+  background:#ff4f9a;
+}
+
+#nextBtn{
+  display:none;
+  background:#333;
+}
+
+#modal{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+
+#modalBox{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h3 id="qText"></h3>
+  <div id="options"></div>
+  <button id="nextBtn" onclick="nextQ()">进入下一题</button>
+</div>
+
+<div id="modal">
+  <div id="modalBox">
+    <p id="modalText"></p>
+    <button onclick="closeModal()">关闭</button>
+  </div>
+</div>
+
+<script>
+
+let index = 0;
+let score = 0;
+let selected = false;
+
+const questions = [
+
+{
+q:"Q1.你觉得你是痴女吗？",
+a:[["是",1],["一点点",0.5],["不是",0]]
+},
+
+{
+q:"Q2.你对于痴女的理解多吗？",
+a:[["非常了解并且我就是",1],["不是特别了解但我觉得我可能是",0.5],["完全不了解",0]]
+},
+
+{
+q:"Q3.对于痴女行为你可以接受吗？",
+a:[["可以",1],["只要不是太过激",0.5],["完全不行",0]]
+},
+
+{
+q:"Q4.你有过实质性的痴女行为吗？",
+a:[
+["有",1],
+["没有",0],
+["我不知道",0.5,"modal","诶？别骗人啊～"]
+]
+},
+
+{
+q:"Q5.你会想要时刻与恋人亲近吗？",
+a:[
+["非常想",1],
+["一般",0.5],
+["不想",0,"transform"]
+]
+},
+
+{
+q:"Q6.你喜欢恋人身上的哪个部位呢？",
+a:[
+["脖子",1],
+["手",1],
+["小腹",1],
+["❤️",2,"modal","^ ^要摸摸吗？"]
+]
+},
+
+{
+q:"Q7.你会觉得自己的痴女行为不太好吗？",
+a:[
+["不会",1],
+["会",0,"transform7"]
+]
+},
+
+{
+q:"Q8.你会时时刻刻意淫恋人吗？",
+a:[["会",1],["不会",0]]
+},
+
+{
+q:"Q9.你会想要每天都盯着恋人的脸吗？",
+a:[["会",1],["不会",0]]
+},
+
+{
+q:"Q10.如果恋人把手伸到你面前你的第一反应是？",
+a:[
+["舔舐",2],
+["牵住",0.5],
+["咬他的手指",1]
+]
+},
+
+{
+q:"Q11.你有详细择偶标准吗？",
+a:[
+["有",0,"modal","是我吗？"],
+["没有",1]
+]
+},
+
+{
+q:"Q12.恋人对你的性吸引指数是？",
+a:[["100%",1],["50%",0.5],["0%",0]]
+},
+
+{
+q:"Q13.如果要打包自己，你会选择什么方式？",
+a:[["丝带礼物盒",1],["手铐眼罩",1],["什么都不穿躺在他床上",1]]
+},
+
+{
+q:"Q14.你会想要尾随他吗？",
+a:[["会",1],["不这太过激了",0,"modal","我不觉得啊^ ^"]]
+},
+
+{
+q:"Q15.看到他咬过一口的冰激凌你会？",
+a:[["想要尝一口",1],["想尝尝他嘴里的味道",2],["只是个冰激凌",0]]
+},
+
+{
+q:"Q16.看到睡着的他你会想？",
+a:[["嗅闻他的味道",1],["偷偷拍照",1],["偷偷亲他",1]]
+},
+
+{
+q:"Q17.当你看见他在做一些不好的事情时，你会？",
+a:[["帮助他",1],["放弃他",0]]
+},
+
+{
+q:"Q18.你会想要他为你戴上项圈吗？",
+a:[["我想",1],["我并不想",0],["也许我可以为他戴上",0.5]]
+},
+
+{
+q:"Q19.被爱的时候会想要得寸进尺吗？",
+a:[["会",1],["不会",0],["想要他对我得寸进尺",0.5]]
+},
+
+{
+q:"Q20.会有分离焦虑吗？",
+a:[["有，很严重",1],["有一点",0.5],["没有",0]]
+},
+
+{
+q:"Q21.能够忍受恋人离开你多久？",
+a:[["一分钟都不可以",2],["一天",1],["一周",0]]
+},
+
+{
+q:"Q22.家里只能有我们两个人",
+a:[["对",1],["不会",0]]
+},
+
+{
+q:"Q23.所有事情都只能是二人世界",
+a:[["是的",1],["不是，也要彼此有些个人空间",0]]
+},
+
+{
+q:"Q24.安装定位器",
+a:[["我想要装",2],["不会，但我希望他的每日行程",1],["这太可怕了！我并不是痴女",0]]
+},
+
+{
+q:"Q25.我的房间里都是你的照片，你用过的东西，你的衣服…",
+a:[["这才能称之为是房间",2],["只有少数东西",1]]
+},
+
+{
+q:"Q26.你身上有我才能闻到的最吸引我的味道",
+a:[["恋人的香味♥",1],["并没有味道",0]]
+},
+
+{
+q:"Q27.如果要说喜欢，可以说多久？",
+a:[["一整天",2],["一小时",0.5],["说不出口",0]]
+},
+
+{
+q:"Q28.你觉得自己是痴女吗？",
+a:[["是",0],["是",0],["是",0]]
+}
+
+];
+
+function showQ(){
+
+selected=false;
+document.getElementById("nextBtn").style.display="none";
+
+if(index>=questions.length){
+showResult();
+return;
+}
+
+let q=questions[index];
+document.getElementById("qText").innerText=q.q;
+
+let box=document.getElementById("options");
+box.innerHTML="";
+
+q.a.forEach(opt=>{
+
+let btn=document.createElement("button");
+btn.innerText=opt[0];
+
+btn.onclick=()=>{
+
+if(selected) return;
+selected=true;
+
+score+=opt[1];
+
+// 弹窗
+if(opt[2]==="modal"){
+showModal(opt[3]);
+}
+
+// 特殊变形题（按你原设定）
+if(opt[2]==="transform"){
+q.a[2][0]="每时每刻想";
+}
+
+document.getElementById("nextBtn").style.display="block";
+};
+
+box.appendChild(btn);
+});
+}
+
+function nextQ(){
+index++;
+showQ();
+}
+
+function showModal(text){
+document.getElementById("modalText").innerText=text;
+document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+function showResult(){
+
+let result="";
+
+if(score>=20){
+result="结局A：果然是痴女啊～";
+}else{
+result="结局B：再放肆一点也没事哦^ ^";
+}
+
+document.querySelector(".card").innerHTML=
+"<h2>"+result+"</h2><p>你的分数："+score+"</p>";
+}
+
+showQ();
+
+</script>
+
+</body>
+</html>
