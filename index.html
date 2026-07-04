@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>痴女三十问</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  padding:30px;
+  background:#fff0f6;
+}
+
+h2{
+  margin-bottom:10px;
+}
+
+.q{
+  margin-bottom:18px;
+  padding:10px;
+  background:white;
+  border-radius:10px;
+}
+
+select{
+  margin-top:5px;
+}
+
+button{
+  margin-top:20px;
+  padding:10px 16px;
+  cursor:pointer;
+}
+
+/* 弹窗 */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.65);
+  justify-content:center;
+  align-items:center;
+}
+
+.box{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  width:280px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<h2>痴女三十问</h2>
+<p>请诚实完成测试（系统会记录你的反应）。</p>
+
+<!-- Q1 -->
+<div class="q">
+Q1.你觉得你是痴女吗？
+<select onchange="q1(this.value)">
+<option value="">请选择</option>
+<option value="A">A 是</option>
+<option value="B">B 一点点</option>
+<option value="C">C 不是</option>
+</select>
+</div>
+
+<!-- Q2 -->
+<div class="q">
+Q2.你对这个词理解？
+<select onchange="q2(this.value)">
+<option value="">请选择</option>
+<option value="A">A 非常了解并且我就是</option>
+<option value="B">B 一般</option>
+<option value="C">C 完全不了解</option>
+</select>
+</div>
+
+<!-- Q3 -->
+<div class="q">
+Q3.你能接受这种倾向吗？
+<select onchange="q3(this.value)">
+<option value="">请选择</option>
+<option value="A">A 可以</option>
+<option value="B">B 视情况</option>
+<option value="C">C 不行</option>
+</select>
+</div>
+
+<!-- Q4 -->
+<div class="q">
+Q4.你有类似行为吗？
+<select onchange="q4(this.value)">
+<option value="">请选择</option>
+<option value="A">A 有</option>
+<option value="B">B 没有</option>
+<option value="C">C 不确定</option>
+</select>
+</div>
+
+<!-- Q5 -->
+<div class="q">
+Q5.你想时刻和他在一起吗？
+<select onchange="q5(this.value)">
+<option value="">请选择</option>
+<option value="A">A 非常想</option>
+<option value="B">B 一般</option>
+<option value="C">C 不想</option>
+</select>
+</div>
+
+<!-- Q6 -->
+<div class="q">
+Q6.你喜欢他的部位？
+<select onchange="q6(this.value)">
+<option value="">请选择</option>
+<option value="A">脖子</option>
+<option value="B">手</option>
+<option value="C">小腹</option>
+<option value="D">❤️</option>
+</select>
+</div>
+
+<!-- Q7 -->
+<div class="q">
+Q7.你觉得自己过分吗？
+<select onchange="q7(this.value)">
+<option value="">请选择</option>
+<option value="A">不会</option>
+<option value="B">会</option>
+</select>
+</div>
+
+<!-- Q8 -->
+<div class="q">
+Q8.你会频繁想他吗？
+<select onchange="q8(this.value)">
+<option value="">请选择</option>
+<option value="A">会</option>
+<option value="B">不会</option>
+</select>
+</div>
+
+<!-- Q9 -->
+<div class="q">
+Q9.你会盯着他吗？
+<select onchange="q9(this.value)">
+<option value="">请选择</option>
+<option value="A">会</option>
+<option value="B">不会</option>
+</select>
+</div>
+
+<!-- Q10 -->
+<div class="q">
+Q10.他伸手你会？
+<select onchange="q10(this.value)">
+<option value="">请选择</option>
+<option value="A">牵住</option>
+<option value="B">咬</option>
+<option value="C">不动</option>
+</select>
+</div>
+
+<!-- Q11 -->
+<div class="q">
+Q11.你有标准吗？
+<select onchange="q11(this.value)">
+<option value="">请选择</option>
+<option value="A">有</option>
+<option value="B">没有</option>
+</select>
+</div>
+
+<!-- Q12 -->
+<div class="q">
+Q12.吸引力？
+<select onchange="q12(this.value)">
+<option value="">请选择</option>
+<option value="A">100%</option>
+<option value="B">50%</option>
+<option value="C">0%</option>
+</select>
+</div>
+
+<!-- Q13 -->
+<div class="q">
+Q13.如何呈现自己？
+<select onchange="q13(this.value)">
+<option value="">请选择</option>
+<option value="A">礼物</option>
+<option value="B">束缚</option>
+<option value="C">躺着</option>
+</select>
+</div>
+
+<!-- Q14 -->
+<div class="q">
+Q14.你会跟踪吗？
+<select onchange="q14(this.value)">
+<option value="">请选择</option>
+<option value="A">会</option>
+<option value="B">不会</option>
+</select>
+</div>
+
+<!-- Q15 -->
+<div class="q">
+Q15.他吃过的东西？
+<select onchange="q15(this.value)">
+<option value="">请选择</option>
+<option value="A">尝一口</option>
+<option value="B">想尝更深的</option>
+<option value="C">不碰</option>
+</select>
+</div>
+
+<!-- Q16 -->
+<div class="q">
+Q16.睡着的他？
+<select onchange="q16(this.value)">
+<option value="">请选择</option>
+<option value="A">闻</option>
+<option value="B">拍照</option>
+<option value="C">亲</option>
+</select>
+</div>
+
+<!-- Q17 -->
+<div class="q">
+Q17.他犯错？
+<select onchange="q17(this.value)">
+<option value="">请选择</option>
+<option value="A">帮他</option>
+<option value="B">离开</option>
+</select>
+</div>
+
+<!-- Q18 -->
+<div class="q">
+Q18.项圈？
+<select onchange="q18(this.value)">
+<option value="">请选择</option>
+<option value="A">想要</option>
+<option value="B">不要</option>
+<option value="C">给他</option>
+</select>
+</div>
+
+<!-- Q19 -->
+<div class="q">
+Q19.得寸进尺？
+<select onchange="q19(this.value)">
+<option value="">请选择</option>
+<option value="A">会</option>
+<option value="B">不会</option>
+<option value="C">希望他</option>
+</select>
+</div>
+
+<!-- Q20 -->
+<div class="q">
+Q20.分离焦虑？
+<select onchange="q20(this.value)">
+<option value="">请选择</option>
+<option value="A">严重</option>
+<option value="B">一点</option>
+<option value="C">没有</option>
+</select>
+</div>
+
+<!-- Q21 -->
+<div class="q">
+Q21.离开多久？
+<select onchange="q21(this.value)">
+<option value="">请选择</option>
+<option value="A">1分钟</option>
+<option value="B">1天</option>
+<option value="C">1周</option>
+</select>
+</div>
+
+<!-- Q22 -->
+<div class="q">
+Q22.只要两人世界？
+<select onchange="q22(this.value)">
+<option value="">请选择</option>
+<option value="A">是</option>
+<option value="B">不是</option>
+</select>
+</div>
+
+<!-- Q23 -->
+<div class="q">
+Q23.需要空间？
+<select onchange="q23(this.value)">
+<option value="">请选择</option>
+<option value="A">不要</option>
+<option value="B">要</option>
+</select>
+</div>
+
+<!-- Q24 -->
+<div class="q">
+Q24.定位？
+<select onchange="q24(this.value)">
+<option value="">请选择</option>
+<option value="A">要</option>
+<option value="B">想知道</option>
+<option value="C">不要</option>
+</select>
+</div>
+
+<!-- Q25 -->
+<div class="q">
+Q25.房间？
+<select onchange="q25(this.value)">
+<option value="">请选择</option>
+<option value="A">都是他的</option>
+<option value="B">一点点</option>
+</select>
+</div>
+
+<!-- Q26 -->
+<div class="q">
+Q26.气味？
+<select onchange="q26(this.value)">
+<option value="">请选择</option>
+<option value="A">喜欢</option>
+<option value="B">无感</option>
+</select>
+</div>
+
+<!-- Q27 -->
+<div class="q">
+Q27.喜欢表达多久？
+<select onchange="q27(this.value)">
+<option value="">请选择</option>
+<option value="A">一整天</option>
+<option value="B">一小时</option>
+<option value="C">说不出</option>
+</select>
+</div>
+
+<!-- Q28 -->
+<div class="q">
+Q28.最终判断？
+<select onchange="q28(this.value)">
+<option value="">请选择</option>
+<option value="A">是</option>
+<option value="B">是</option>
+<option value="C">是</option>
+</select>
+</div>
+
+<!-- Q29 -->
+<div class="q">
+Q29.当你意识到这些想法时？
+<select onchange="q29(this.value)">
+<option value="">请选择</option>
+<option value="A">接受</option>
+<option value="B">害羞</option>
+<option value="C">否认</option>
+</select>
+</div>
+
+<!-- Q30 -->
+<div class="q">
+Q30.如果这些描述是你？
+<select onchange="q30(this.value)">
+<option value="">请选择</option>
+<option value="A">继续看</option>
+<option value="B">停下</option>
+<option value="C">关闭</option>
+</select>
+</div>
+
+<button onclick="result()">提交问卷</button>
+
+<!-- 弹窗 -->
+<div class="modal" id="modal">
+<div class="box">
+<p id="text"></p>
+<button onclick="closeModal()">关闭</button>
+</div>
+</div>
+
+<script>
+
+let score = 0;
+
+/* 加分 */
+function add(v,a,b,c){
+  if(v==="A") score+=a;
+  if(v==="B") score+=b;
+  if(v==="C") score+=c;
+}
+
+/* 弹窗 */
+function show(t){
+  document.getElementById("text").innerText=t;
+  document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+/* 特殊逻辑 */
+function q4(v){
+  if(v==="A") score+=1;
+  if(v==="C") show("……你在犹豫什么？");
+}
+
+function q5(v){
+  if(v==="C") show("真的不想吗？");
+  add(v,1,0.5,0);
+}
+
+function q6(v){
+  if(v==="D"){ score+=2; show("^ ^要摸摸吗？"); }
+  else score+=1;
+}
+
+function q11(v){
+  if(v==="A") show("是我吗？");
+  add(v,0,1);
+}
+
+function q14(v){
+  if(v==="B") show("我不觉得啊^ ^");
+  add(v,1,0);
+}
+
+function q15(v){
+  if(v==="B"){ score+=2; show("这个答案有点危险哦"); }
+  else add(v,1,0,0);
+}
+
+function q21(v){
+  if(v==="A"){ score+=2; show("一分钟都不行？"); }
+  else add(v,1,0.5,0);
+}
+
+function q24(v){
+  if(v==="A"){ score+=2; show("你确定吗？"); }
+  else if(v==="B"){ score+=1; show("你在想更多"); }
+}
+
+function q27(v){ add(v,2,0.5,0); }
+
+function q29(v){
+  if(v==="A"){ score+=1.5; show("你比想象中诚实。"); }
+  if(v==="B"){ score+=1; show("这样也很好。"); }
+  if(v==="C"){ show("真的只是错觉吗？"); }
+}
+
+function q30(v){
+  if(v==="A"){ score+=2; show("测试结束，但你没有停止思考。"); }
+  if(v==="B"){ score+=0.5; show("你在犹豫。"); }
+  if(v==="C"){ show("你已经知道答案了。"); }
+}
+
+/* 结局 */
+function result(){
+
+  if(score > 30){
+    show("隐藏结局：你已经不只是参与者了。");
+  }
+  else if(score > 20){
+    show("结局A：果然是痴女啊～");
+  }
+  else{
+    show("结局B：再放肆一点也没关系哦^ ^");
+  }
+}
+
+</script>
+
+</body>
+</html>
